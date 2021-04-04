@@ -161,11 +161,9 @@ function getAccessToken(oAuth2Client) {
   });
 }
 
-/**
- * Lists the next 10 events on the user's primary calendar.
- * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
- */
-function listEvents(auth) {}
+app.get('/google55deb6c4039203bb.html', (req, res) => {
+  res.sendFile(__dirname + '/google55deb6c4039203bb.html');
+});
 
 app.listen(process.env.PORT || PORT, () => {
   console.log('Listening on port' + process.env.PORT || PORT);
