@@ -95,7 +95,10 @@ app.get('/events', (req, res) => {
         });
 
         let filteredEvents = filterEvents(eventsToFilter);
-        result.events = filteredEvents;
+        let sortedEvents = filteredEvents.sort((a, b) =>
+          a.date < b.date ? 1 : a.date > b.date ? -1 : 0
+        );
+        result.events = sortedEvents;
 
         res.send(result);
       } else {
