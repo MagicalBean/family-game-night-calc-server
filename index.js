@@ -59,7 +59,7 @@ app.get('/events', (req, res) => {
   const calendar = google.calendar({ version: 'v3', auth: oAuth2Client });
   calendar.events.list(
     {
-      calendarId: 'csthj75peuv7bj3dv40k9jcc30@group.calendar.google.com',
+      calendarId: process.env.CALENDAR_ID,
       timeMax: new Date().toISOString(),
       singleEvents: true,
       orderBy: 'startTime',
