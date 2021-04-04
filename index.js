@@ -2,6 +2,11 @@ app = require('express')();
 cors = require('cors');
 const PORT = 3001;
 
+require('dotenv').config();
+
+const axios = require('axios');
+const JsonBinIoApi = require('jsonbin-io-api');
+const api = new JsonBinIoApi(process.env.SECRET_KEY);
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
@@ -17,10 +22,24 @@ let credentials, token;
 
 app.use(cors());
 
-fs.readFile('credentials.json', (err, content) => {
-  if (err) return console.log('Error loading client secret file:', err);
-  credentials = JSON.parse(content);
-});
+var options = {
+  host: 'api.jsonbin.io',
+  path: process.env.CREDENTIAL_URL,
+  method: 'GET',
+  headers: {
+    'X-Master-Key': process.env.SECRET_KEY,
+  },
+};
+
+api
+  .readBin({
+    id: process.env.BIN_ID,
+    version: 'latest',
+  })
+  .then((res) => {
+    credentials = res;
+  })
+  .catch((err) => console.log(err));
 
 fs.readFile(TOKEN_PATH, (err, _token) => {
   if (err) return getAccessToken(oAuth2Client, callback);
