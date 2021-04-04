@@ -7,6 +7,7 @@ require('dotenv').config();
 const axios = require('axios');
 const JsonBinIoApi = require('jsonbin-io-api');
 const api = new JsonBinIoApi(process.env.SECRET_KEY);
+
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
@@ -22,14 +23,23 @@ let credentials, token;
 
 app.use(cors());
 
-var options = {
-  host: 'api.jsonbin.io',
-  path: process.env.CREDENTIAL_URL,
-  method: 'GET',
-  headers: {
-    'X-Master-Key': process.env.SECRET_KEY,
-  },
-};
+const GAMES = [];
+
+axios
+  .get(
+    'https://api.kvstore.io/collections/family-game-night-calc/items/games',
+    {
+      headers: {
+        kvstoreio_api_key: process.env.KVSTOREIO_KEY,
+      },
+    }
+  )
+  .then((res) => {
+    res.data.value.split(',').forEach((item) => {
+      GAMES.push(item);
+    });
+  })
+  .catch((err) => console.log(err));
 
 api
   .readBin({
@@ -94,8 +104,6 @@ app.get('/events', (req, res) => {
     }
   );
 });
-
-const GAMES = ['Colt Express', 'Pictionary', 'Ticket to Ride', 'Catan'];
 
 function filterEvents(events) {
   let result = [];
