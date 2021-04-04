@@ -166,5 +166,5 @@ app.get('/google55deb6c4039203bb.html', (req, res) => {
 });
 
 app.listen(process.env.PORT || PORT, () => {
-  console.log('Listening on port' + process.env.PORT || PORT);
+  console.log('Listening on port ' + process.env.PORT || PORT);
 });
