@@ -17,6 +17,7 @@
     "fs": "0.0.1-security",
     "googleapis": "^70.0.0",
     "jsonbin-io-api": "^1.0.2",
+    "mongoose": "^5.12.7",
     "nodemon": "^2.0.7",
     "readline": "^1.3.0"
   },
